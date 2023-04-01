@@ -1,6 +1,7 @@
 import { ADD_FAV, REMOVE_FAV, FILTER, ORDER , GET_FAVALL} from "./actions";
 
 const initialState = {
+  idUser:0,
   allMyFavorites: [],
   myFavorites: []
 };
@@ -51,6 +52,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         myFavorites: state.allMyFavorites,
       };
+      case "LOGIN":
+        return{
+          ...state,
+          idUser: action.payload,
+        };
       case GET_FAVALL:
       return{
         ...state,

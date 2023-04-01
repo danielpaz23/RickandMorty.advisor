@@ -7,10 +7,10 @@ export const GET_FAVALL= "GET_FAVALL";
 
 
 
-export function addFav(personaje){
+export function addFav(personaje, idUser){
   try {
     return async function(dispatch){
-      await axios.post("http://localhost:3001/rickandmorty/fav", personaje)
+      await axios.post(`http://localhost:3001/fav?idUser=${idUser}`, personaje)
       return dispatch({
         type: ADD_FAV,
         payload: personaje
@@ -27,10 +27,10 @@ export function addFav(personaje){
   //   }
 }
 
-export function removeFav(id){
+export function removeFav(id, idUser){
   try {
     return async function(dispatch){
-      await axios.delete(`http://localhost:3001/rickandmorty/fav${id}`)
+      await axios.delete(`http://localhost:3001/fav${id}?idUser=${idUser}`)
       return dispatch({
         ttype: REMOVE_FAV,
         payload: id
@@ -45,10 +45,10 @@ export function removeFav(id){
   //       payload: id
   //   }
 }
-export function getFavorites(){
+export function getFavorites(idUser){
   try {
     return async function(dispatch){
-      const response = await axios.get(`http://localhost:3001/rickandmorty/fav`)
+      const response = await axios.get(`http://localhost:3001/fav?idUser=${idUser}`)
       return dispatch({
         type:GET_FAVALL,
         payload: response.data
@@ -73,5 +73,17 @@ export function filterCards(status) {
       type: ORDER,
       payload: id,
     };
+  }
+  export function login(email, password){
+    return async function(dispatch){
+      try {
+        const obj= await fetch(
+          `http:://localhost:3001/login?email=${email}&password=${password}`
+        ).then((response)=> response.json);
+        if(obj.access)dispatch({type:"LOGIN", payload: obj.id});
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
   

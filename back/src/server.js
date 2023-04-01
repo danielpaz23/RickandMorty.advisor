@@ -1,5 +1,7 @@
 const http = require('http');
 const app= require("./app");
+const {conn}= require('./DB_connection');
+
 // const express= require('express');
 // const router = require('./routes');
 // const app= express();
@@ -28,6 +30,8 @@ const app= require("./app");
 
 
 // })
-app.listen(3001,()=>{
+conn.sync({force:true}).then(()=>{
+    app.listen(3001,()=>{
     console.log('Server raised in port')
+})
 });
